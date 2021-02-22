@@ -30,4 +30,25 @@ router.get("/mine", validateSession, (req, res) => {
     .catch(err => res.status(500).json({ error: err }))
 });
 
+router.put("/update/:entryId", validateSession, function (req, res) {
+    const updateFavoritesEntry = {
+        note: req.body.favorites.note,
+    };
+
+    const query = { where: { id: req.params.entryId, user_id: req.user.id} };
+
+    Favorites.update(updateFavoritesEntry, query)
+        .then((favorites) => res.status(200).json(favorites))
+        .catch((err) => res.status(500).json({ error: err}));
+
+});
+
+router.delete("/delete/:id", validateSession, function (req, res) {
+    const query = { where: { id: req.params.id, user_id: req.user.id}};
+
+    Favorites.destroy(query)
+        .then(() => res.status(200).json({ message: "Recipe Removed" }))
+        .catch((err) => res.status(500).json({ error: err}));
+});
+
 module.exports = router;
