@@ -32,5 +32,24 @@ router.post('/register', (req, res) =>{
 router.post('/login', (req,res) => {
     res.send("this is the login route")
 })
+    User.login({
+        email: req.body.user.email,
+        password: bcrypt.hashSync(req.body.user.password, 13)
+    })
+    .then((user) => {
+        console.log(user)
+        let token = jwt.sign( {id: user.id}, process.env.JWT_SECRET, {expiresIn: 60 * 60 * 24} );
+        res.status(200).json({
+            user: user,
+            message: "user login worked",
+            sessionToken: token
+        })
+    })
+    .catch((err) => {
+        console.log("failed to login user" )
+        res.status(500).json({
+                error: "login did not work"
+        })
+    })
 
 module.exports = router
