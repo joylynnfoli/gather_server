@@ -29,9 +29,9 @@ router.post('/register', (req, res) =>{
     })
 })
 //login
-router.post('/login', (req,res) => {
-    res.send("this is the login route")
-})
+router.post('/login', (req, res) => {
+    res.send("this is the login route"),
+
     User.login({
         email: req.body.user.email,
         password: bcrypt.hashSync(req.body.user.password, 13)
@@ -51,5 +51,5 @@ router.post('/login', (req,res) => {
                 error: "login did not work"
         })
     })
-
+})
 module.exports = router
