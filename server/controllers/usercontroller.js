@@ -3,7 +3,6 @@ let router = express.Router()
 let bcrypt = require('bcryptjs')
 let jwt = require('jsonwebtoken')
 let db = require('../db')
-//const user = require('../models/user')
 const User = db.import('../models/user')
 
 //register
@@ -24,15 +23,13 @@ router.post('/register', (req, res) =>{
     .catch((err) => {
         console.log("failed to save a user" )
         res.status(500).json({
-                error: "register did not work"
+                err: "register did not work"
         })
     })
 })
 //login
 router.post('/login', (req, res) => {
-    res.send("this is the login route"),
-
-    User.login({
+    User.findOne({
         email: req.body.user.email,
         password: bcrypt.hashSync(req.body.user.password, 13)
     })
@@ -48,7 +45,7 @@ router.post('/login', (req, res) => {
     .catch((err) => {
         console.log("failed to login user" )
         res.status(500).json({
-                error: "login did not work"
+                err: "login did not work"
         })
     })
 })
