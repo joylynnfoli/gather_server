@@ -1,6 +1,5 @@
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize("Gather-Server", "postgres", "password", {
-  host: "localhost",
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
   dialetOptions: {
     ssl:{
@@ -13,7 +12,7 @@ const sequelize = new Sequelize("Gather-Server", "postgres", "password", {
 sequelize
   .authenticate()
   .then(() => {
-    console.log("Connected to gather-server postgres database");
+    console.log(`Connected to ${process.env.DATABASE_URL} postgres database`);
   })
   .catch((err) => {
     console.log(err);
