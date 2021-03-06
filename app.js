@@ -7,7 +7,6 @@ const User = require('./controllers/usercontroller');
 const Favorites = require('./controllers/favoritesController');
 
 sequelize.sync();
-//sequelize.sync({force: true})
 
 app.use(require('./middleware/headers'));
 
