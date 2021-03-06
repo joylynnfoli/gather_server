@@ -9,7 +9,7 @@ const User = db.import("../models/user");
 router.post("/register", (req, res) => {
   User.create({
     email: req.body.user.email,
-    password: bcrypt.compare(req.body.user.password, 13),
+    password: bcrypt.hashSync(req.body.user.password, 13),
   })
     .then((user) => {
       console.log(user);
