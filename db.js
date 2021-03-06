@@ -2,7 +2,13 @@ const Sequelize = require("sequelize");
 const sequelize = new Sequelize("Gather-Server", "postgres", "password", {
   host: "localhost",
   dialect: "postgres",
-});
+  dialetOptions: {
+    ssl:{
+      require: true,
+      rejectUnauthorized: false
+    }
+  }
+  });
 
 sequelize
   .authenticate()
